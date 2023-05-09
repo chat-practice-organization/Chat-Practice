@@ -14,7 +14,7 @@ public class TestController {
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body("hello test");
+                .body("cd 완료");
 
     }
 }
