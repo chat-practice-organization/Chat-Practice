@@ -31,6 +31,7 @@ public class InsertQueueController {
     }
 
 
+
     @GetMapping(value = "/")
     public ResponseEntity<String> getHotDeals() {
         return ResponseEntity
