@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 public class ChatTopics {
 
-    public static final String CHAT_MESSAGES_TOPIC = "test_topic";
+    public static final String CHAT_MESSAGES_TOPIC = "chat-topic";
 
 
 }
