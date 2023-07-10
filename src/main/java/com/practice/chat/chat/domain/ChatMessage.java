@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @ToString
 @Getter
 @Setter
-@RedisHash(value = "chatMessage", timeToLive = -1)
+@RedisHash(value = "chatMessage")
 public class ChatMessage {
 
     @Id
