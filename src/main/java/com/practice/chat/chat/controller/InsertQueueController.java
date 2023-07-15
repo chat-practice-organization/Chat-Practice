@@ -2,7 +2,6 @@ package com.practice.chat.chat.controller;
 
 import com.practice.chat.chat.domain.ChatMessage;
 import com.practice.chat.chat.service.InsertQueueService;
-import com.practice.chat.chat.stat.ChatTopics;
 import com.practice.chat.repository.redis.chat.ChatMessageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
