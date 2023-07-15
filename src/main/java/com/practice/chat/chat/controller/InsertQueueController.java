@@ -6,6 +6,7 @@ import com.practice.chat.chat.stat.ChatTopics;
 import com.practice.chat.repository.redis.chat.ChatMessageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -19,15 +20,19 @@ import java.sql.Timestamp;
 @RequiredArgsConstructor
 public class InsertQueueController {
 
+    @Value("${kafka.topic.chat}")
+    private String CHAT_MESSAGES_TOPIC;
+
     private final ChatMessageRepository chatMessageRepository;
     private final InsertQueueService insertQueueService;
+
 
     // 채팅 메시지 받아서 메시지 큐와 db에 저장
     @MessageMapping("/chat/message")
     public void insertChatMessage(ChatMessage chatMessage) {
         chatMessage.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         chatMessageRepository.save(chatMessage);
-        insertQueueService.insertChatMessage(ChatTopics.CHAT_MESSAGES_TOPIC, chatMessage);
+        insertQueueService.insertChatMessage(CHAT_MESSAGES_TOPIC, chatMessage);
     }
 
 

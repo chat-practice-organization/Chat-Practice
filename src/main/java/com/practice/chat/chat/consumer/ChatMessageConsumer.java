@@ -20,7 +20,7 @@ public class ChatMessageConsumer {
     private final SendMessageService sendMessageService;
 
 
-    @KafkaListener(topics = ChatTopics.CHAT_MESSAGES_TOPIC )
+    @KafkaListener(topics = "${kafka.topic.chat}" )
     public void consume(String message) throws JsonProcessingException {
         ChatMessage chatMessage = objectMapper.readValue(message, ChatMessage.class);
         sendMessageService.sendChatMessage(chatMessage);
