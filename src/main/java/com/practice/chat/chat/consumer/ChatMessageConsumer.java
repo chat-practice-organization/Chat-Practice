@@ -2,7 +2,6 @@ package com.practice.chat.chat.consumer;
 
 import com.practice.chat.chat.domain.ChatMessage;
 import com.practice.chat.chat.service.SendMessageService;
-import com.practice.chat.chat.stat.ChatTopics;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
