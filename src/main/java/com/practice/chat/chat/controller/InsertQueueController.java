@@ -1,7 +1,7 @@
 package com.practice.chat.chat.controller;
 
 import com.practice.chat.chat.domain.ChatMessage;
-import com.practice.chat.chat.service.InsertQueueService;
+import com.practice.chat.chat.producer.ChatMessageProducer;
 import com.practice.chat.repository.redis.chat.ChatMessageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ public class InsertQueueController {
     private String CHAT_MESSAGES_TOPIC;
 
     private final ChatMessageRepository chatMessageRepository;
-    private final InsertQueueService insertQueueService;
+    private final ChatMessageProducer chatMessageProducer;
 
 
     // 채팅 메시지 받아서 메시지 큐와 db에 저장
@@ -31,7 +31,7 @@ public class InsertQueueController {
     public void insertChatMessage(ChatMessage chatMessage) {
         chatMessage.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         chatMessageRepository.save(chatMessage);
-        insertQueueService.insertChatMessage(CHAT_MESSAGES_TOPIC, chatMessage);
+        chatMessageProducer.produceChatMessage(CHAT_MESSAGES_TOPIC, chatMessage);
     }
 
 
