@@ -19,8 +19,8 @@ import java.sql.Timestamp;
 @RequiredArgsConstructor
 public class InsertQueueController {
 
-    @Value("${kafka.topic.chat}")
-    private String CHAT_MESSAGES_TOPIC;
+    @Value("${kafka.topic.chat.send}")
+    private String CHAT_MESSAGES_SEND_TOPIC;
 
     private final ChatMessageRepository chatMessageRepository;
     private final ChatMessageProducer chatMessageProducer;
@@ -31,7 +31,7 @@ public class InsertQueueController {
     public void insertChatMessage(ChatMessage chatMessage) {
         chatMessage.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         chatMessageRepository.save(chatMessage);
-        chatMessageProducer.produceChatMessage(CHAT_MESSAGES_TOPIC, chatMessage);
+        chatMessageProducer.produceChatMessage(CHAT_MESSAGES_SEND_TOPIC, chatMessage);
     }
 
 
