@@ -1,6 +1,7 @@
 package com.practice.chat.chat.consumer;
 
 import com.practice.chat.chat.domain.ChatMessage;
+import com.practice.chat.chat.dto.PreProcessedChatMessage;
 import com.practice.chat.chat.service.SendMessageService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,9 +28,9 @@ public class ChatMessageConsumer {
     public void consume(List<String> messages) {
         log.info("batch size:" + messages.size());
         messages.forEach(message -> {
-            ChatMessage chatMessage = null;
+            PreProcessedChatMessage chatMessage = null;
             try {
-                chatMessage = objectMapper.readValue(message, ChatMessage.class);
+                chatMessage = objectMapper.readValue(message, PreProcessedChatMessage.class);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
