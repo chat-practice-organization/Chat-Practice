@@ -1,13 +1,13 @@
 package com.practice.chat.chat.consumer;
 
-import com.practice.chat.chat.domain.ChatMessage;
-import com.practice.chat.chat.dto.PreProcessedChatMessage;
-import com.practice.chat.chat.service.SendMessageService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.practice.chat.chat.dto.PreProcessedChatMessage;
+import com.practice.chat.chat.service.SendMessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.annotation.TopicPartition;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class ChatMessageConsumer {
     private final SendMessageService sendMessageService;
 
 
-    @KafkaListener(topics = "${kafka.topic.chat.receive}", containerFactory = "kafkaBatchListenerContainerFactory")
+    @KafkaListener(containerFactory = "kafkaBatchListenerContainerFactory", topicPartitions = @TopicPartition(topic = "${kafka.topic.chat.receive}", partitions = "${was.id}"))
     public void consume(List<String> messages) {
         log.info("batch size:" + messages.size());
         messages.forEach(message -> {
