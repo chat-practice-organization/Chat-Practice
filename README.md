@@ -18,7 +18,7 @@ Spring Boot, Kubernetes, Kafka, Docker, Redis, PostgreSQL, Prometheus, Grafana, 
 
 # 채팅 파이프라인
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a27ea784-08ac-4b1a-acdc-d2000a933ad8/Untitled.png)
+![img](https://drive.google.com/file/d/1ewZlqZwZDKrrMT4u8UzC6krxMLVHklkp/view?usp=drive_link)
 
 ### 전달 과정
 
