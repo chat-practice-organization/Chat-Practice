@@ -7,7 +7,6 @@
 # 소개
 
 Kubernetes, kafka 등 인프라에서 사용되는 기술에 대한 깊이있는 학습과 Enterprise 규모에서 사용할 수 있는 시스템 설계 역량을 기르기 위해 시작한 프로젝트입니다.
-
 이를 위해, 초당 수만 건 이상의 트래픽으로 부하테스트를 진행하며 성능을 개선 시켜나갔으며 Scale in/out, Failover 전략, 모니터링, 배포 방식 등을 고려하면서 서버를 설계해나갔습니다. 설계만 한 것이 아니라 AWS EKS를 이용해 실제로 설계한 내용들을 클라우드 환경에 구현하였습니다.
 
 # 기술 스택
@@ -18,7 +17,7 @@ Spring Boot, Kubernetes, Kafka, Docker, Redis, PostgreSQL, Prometheus, Grafana, 
 
 # 채팅 파이프라인
 
-![img](https://drive.google.com/file/d/1ewZlqZwZDKrrMT4u8UzC6krxMLVHklkp/view?usp=drive_link)
+![img](https://chat-practice-image.s3.ap-northeast-2.amazonaws.com/%E1%84%8B%E1%85%B0%E1%86%B8%E1%84%89%E1%85%A9%E1%84%8F%E1%85%A6%E1%86%BA+%E1%84%86%E1%85%AE%E1%86%AB%E1%84%8C%E1%85%A6+%E1%84%92%E1%85%A2%E1%84%80%E1%85%A7%E1%86%AF%E1%84%83%E1%85%AC%E1%86%AB+%E1%84%80%E1%85%AE%E1%84%8C%E1%85%A9(%E1%84%86%E1%85%A2%E1%84%91%E1%85%B5%E1%86%BC%E1%84%90%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%87%E1%85%B3%E1%86%AF+%E1%84%87%E1%85%A1%E1%86%BC%E1%84%89%E1%85%B5%E1%86%A8)+(1).jpg)
 
 ### 전달 과정
 
@@ -30,7 +29,6 @@ Spring Boot, Kubernetes, Kafka, Docker, Redis, PostgreSQL, Prometheus, Grafana, 
 ### Scale out
 
 소켓 커넥션으로 인해 WAS가 상태를 가져 수평확장 방식을 설계하는데 어려움이 있었지만
-
 Routing table과 WAS-Partition 일대일 매핑 그리고 Message classifier를 통해 수평확장 가능한 구조로 만들었습니다.
 
 ### Failover
