@@ -39,4 +39,5 @@ WAS에 소켓도 연결되어 있고 파티션과의 매핑 관계도 유지해�
 chat-send-topic에 들어간 채팅 메시지는 Message classifier에서 병렬적으로 consuming 되기 때문에 메시지 간 순서가 보장되지 않는 문제가 있었습니다. 이를 해결하기 위해 WAS에서 Chat-send-topic에 produce 할 때 key 값으로 채팅방id를 넣어 같은 채팅방id를 가진 메시지는 동일한 파티션으로 들어가게 만들었고 최소한 같은 채팅방 내 메시지들의 순서는 보장할 수 있게 되었습니다.
 
 **더 자세한 내용은 아래 노션 페이지에서 확인하실 수 있습니다.**
+
 [웹소켓 Scale out 전략](https://www.notion.so/Scale-out-8d9fcc178d72470bbaac325fbc446d10?pvs=21)
