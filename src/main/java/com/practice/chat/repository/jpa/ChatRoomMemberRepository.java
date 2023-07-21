@@ -1,10 +1,13 @@
 package com.practice.chat.repository.jpa;
 
 import com.practice.chat.chat.domain.ChatRoomMember;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
 public interface ChatRoomMemberRepository extends JpaRepository<ChatRoomMember,Long> {
-    List<ChatRoomMember> findChatRoomMemberJpaByChatRoomId(Long chatRoomId);
+    @Cacheable(value = "chatRoomMemberByChatRoomId", key = "#chatRoomId.toString()",cacheManager = "redisCacheManager")
+    List<ChatRoomMember> findTop500ChatRoomMemberJpaByChatRoomId(Long chatRoomId);
 }
