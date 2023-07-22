@@ -1,6 +1,6 @@
 package com.practice.chat.service;
 
-import com.practice.chat.dto.PreProcessedChatMessage;
+import dto.PreprocessedChatMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class SendMessageService {
     private final SimpMessagingTemplate simpMessagingTemplate;
 
-    public void sendChatMessage(PreProcessedChatMessage chatMessage) {
+    public void sendChatMessage(PreprocessedChatMessage chatMessage) {
         simpMessagingTemplate.convertAndSend("/sub/user/" + chatMessage.getReceiverSessionId(), chatMessage);
     }
 

@@ -2,7 +2,7 @@ package com.practice.chat.consumer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.practice.chat.dto.PreProcessedChatMessage;
+import dto.PreprocessedChatMessage;
 import com.practice.chat.service.SendMessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,13 +28,13 @@ public class ReceivedChatMessageConsumer {
     public void consume(List<String> messages) {
         log.info("batch size:" + messages.size());
         messages.forEach(message -> {
-            PreProcessedChatMessage chatMessage = null;
+            PreprocessedChatMessage preprocessedChatMessage = null;
             try {
-                chatMessage = objectMapper.readValue(message, PreProcessedChatMessage.class);
+                preprocessedChatMessage = objectMapper.readValue(message, PreprocessedChatMessage.class);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
-            sendMessageService.sendChatMessage(chatMessage);
+            if (preprocessedChatMessage != null) sendMessageService.sendChatMessage(preprocessedChatMessage);
 
         });
         count.addAndGet(messages.size());
