@@ -1,0 +1,8 @@
+aws:
+  secretsmanager:
+    name: chat/spring/local
+    failFast: false
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2
