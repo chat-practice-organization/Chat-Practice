@@ -1,9 +1,7 @@
-package com.practice.chat.chat.dto;
+package com.practice.chat.dto;
 
-import com.practice.chat.chat.domain.ChatMessage;
+import com.practice.chat.domain.ChatMessage;
 import lombok.*;
-
-import java.sql.Timestamp;
 
 @Builder
 @NoArgsConstructor

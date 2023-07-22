@@ -1,6 +1,6 @@
-package com.practice.chat.chat.service;
+package com.practice.chat.service;
 
-import com.practice.chat.chat.domain.RoutingTable;
+import com.practice.chat.domain.RoutingTable;
 import com.practice.chat.repository.redis.chat.RoutingTableRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

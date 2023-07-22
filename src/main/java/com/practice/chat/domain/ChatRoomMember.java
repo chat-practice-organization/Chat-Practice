@@ -1,4 +1,4 @@
-package com.practice.chat.chat.domain;
+package com.practice.chat.domain;
 
 
 
@@ -7,8 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
-import org.springframework.data.redis.core.RedisHash;
-import org.springframework.data.redis.core.index.Indexed;
 
 @Builder
 @NoArgsConstructor

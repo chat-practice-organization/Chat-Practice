@@ -1,6 +1,6 @@
-package com.practice.chat.chat.producer;
+package com.practice.chat.producer;
 
-import com.practice.chat.chat.domain.ChatMessage;
+import com.practice.chat.domain.ChatMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

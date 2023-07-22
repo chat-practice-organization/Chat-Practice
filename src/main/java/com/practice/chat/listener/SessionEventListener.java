@@ -1,18 +1,13 @@
-package com.practice.chat.chat.listener;
+package com.practice.chat.listener;
 
-import com.practice.chat.chat.domain.RoutingTable;
-import com.practice.chat.chat.service.UpdateRoutingTableService;
-import com.practice.chat.repository.redis.chat.RoutingTableRepository;
+import com.practice.chat.service.UpdateRoutingTableService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectEvent;
-import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 @Component

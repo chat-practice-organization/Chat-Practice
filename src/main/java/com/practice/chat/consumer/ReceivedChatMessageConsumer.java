@@ -1,9 +1,9 @@
-package com.practice.chat.chat.consumer;
+package com.practice.chat.consumer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.practice.chat.chat.dto.PreProcessedChatMessage;
-import com.practice.chat.chat.service.SendMessageService;
+import com.practice.chat.dto.PreProcessedChatMessage;
+import com.practice.chat.service.SendMessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;

@@ -1,4 +1,4 @@
-package com.practice.chat.chat.domain;
+package com.practice.chat.domain;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;

@@ -1,8 +1,7 @@
 package com.practice.chat.repository.jpa;
 
-import com.practice.chat.chat.domain.ChatRoomMember;
+import com.practice.chat.domain.ChatRoomMember;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
