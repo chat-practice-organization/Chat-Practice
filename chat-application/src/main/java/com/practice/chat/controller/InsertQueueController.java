@@ -40,7 +40,7 @@ public class InsertQueueController {
     public ResponseEntity<String> getHotDeals() {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body("hello");
+                .body("hello22");
 
     }
 
