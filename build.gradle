@@ -62,13 +62,17 @@ project(':chat-application') {
     bootJar.enabled = true
     jar.enabled = false
 
-    dependencies {}
+    dependencies {
+        implementation project(':common')
+    }
 }
 
 project(':message-classifier') {
     bootJar.enabled = true
     jar.enabled = false
 
-    dependencies {}
+    dependencies {
+        implementation project(':common')
+    }
 }
 
