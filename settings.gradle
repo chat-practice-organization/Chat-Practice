@@ -1,4 +1,5 @@
 rootProject.name = 'chat'
 include 'message-classifier'
 include 'chat-application'
+include 'common'
 
