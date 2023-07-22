@@ -1,6 +1,6 @@
 package com.practice.chat.dto;
 
-import com.practice.chat.domain.ChatMessage;
+import domain.ChatMessage;
 import lombok.*;
 
 @Builder

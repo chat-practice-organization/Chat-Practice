@@ -1,4 +1,4 @@
-package com.practice.chat.domain;
+package domain;
 
 
 
