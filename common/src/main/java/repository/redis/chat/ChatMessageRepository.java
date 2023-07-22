@@ -1,4 +1,4 @@
-package com.practice.chat.repository.redis.chat;
+package repository.redis.chat;
 
 
 import domain.ChatMessage;

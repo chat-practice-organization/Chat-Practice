@@ -1,4 +1,4 @@
-package com.practice.chat.repository.jpa;
+package repository.jpa;
 
 import domain.ChatRoomMember;
 import org.springframework.cache.annotation.Cacheable;

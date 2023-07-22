@@ -1,7 +1,7 @@
 package com.practice.chat.config;
 
 import domain.ChatRoomMember;
-import com.practice.chat.repository.jpa.ChatRoomMemberRepository;
+import repository.jpa.ChatRoomMemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;

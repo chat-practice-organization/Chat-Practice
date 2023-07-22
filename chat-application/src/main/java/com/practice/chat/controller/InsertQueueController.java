@@ -2,7 +2,7 @@ package com.practice.chat.controller;
 
 import domain.ChatMessage;
 import com.practice.chat.producer.ChatMessageProducer;
-import com.practice.chat.repository.redis.chat.ChatMessageRepository;
+import repository.redis.chat.ChatMessageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,4 +1,4 @@
-package com.practice.chat.config;
+package config;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +16,7 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
-@EnableRedisRepositories(basePackages = "com.practice.chat.repository.redis.chat",
+@EnableRedisRepositories(basePackages = {"repository.redis.chat"},
         redisTemplateRef = "chatRedisTemplate", keyValueTemplateRef = "chatKeyValueTemplate",
         enableKeyspaceEvents = RedisKeyValueAdapter.EnableKeyspaceEvents.ON_STARTUP)
 public class ChatRedisConfig {

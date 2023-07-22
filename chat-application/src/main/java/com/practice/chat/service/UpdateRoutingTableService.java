@@ -1,7 +1,7 @@
 package com.practice.chat.service;
 
 import domain.RoutingTable;
-import com.practice.chat.repository.redis.chat.RoutingTableRepository;
+import repository.redis.chat.RoutingTableRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
