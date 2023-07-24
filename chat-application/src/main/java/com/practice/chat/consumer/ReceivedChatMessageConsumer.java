@@ -24,19 +24,35 @@ public class ReceivedChatMessageConsumer {
     private final SendMessageService sendMessageService;
 
 
-    @KafkaListener(containerFactory = "kafkaBatchListenerContainerFactory", topicPartitions = @TopicPartition(topic = "${kafka.topic.chat.receive}", partitions = "${was.id}"))
-    public void consume(List<String> messages) {
-        log.info("batch size:" + messages.size());
-        messages.forEach(message -> {
-            PreprocessedChatMessage preprocessedChatMessage = null;
-            try {
-                preprocessedChatMessage = objectMapper.readValue(message, PreprocessedChatMessage.class);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
-            if (preprocessedChatMessage != null) sendMessageService.sendChatMessage(preprocessedChatMessage);
+//    @KafkaListener(containerFactory = "kafkaBatchListenerContainerFactory", topicPartitions = @TopicPartition(topic = "${kafka.topic.chat.receive}", partitions = "${was.id}"))
+//    public void consume(List<String> messages) {
+//        log.info("batch size:" + messages.size());
+//        messages.forEach(message -> {
+//            PreprocessedChatMessage preprocessedChatMessage = null;
+//            try {
+//                preprocessedChatMessage = objectMapper.readValue(message, PreprocessedChatMessage.class);
+//            } catch (JsonProcessingException e) {
+//                e.printStackTrace();
+//            }
+//            if (preprocessedChatMessage != null) sendMessageService.sendChatMessage(preprocessedChatMessage);
+//
+//        });
+//
+//        count.addAndGet(messages.size());
+//    }
 
-        });
-        count.addAndGet(messages.size());
+    @KafkaListener(topics = "${kafka.topic.chat.receive}",containerFactory = "kafkaBatchListenerContainerFactory")
+    public void consume(String message) {
+
+
+        PreprocessedChatMessage preprocessedChatMessage = null;
+        try {
+            preprocessedChatMessage = objectMapper.readValue(message, PreprocessedChatMessage.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        if (preprocessedChatMessage != null) sendMessageService.sendChatMessage(preprocessedChatMessage);
+
+
     }
 }
