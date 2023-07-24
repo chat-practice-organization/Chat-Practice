@@ -27,7 +27,7 @@ Spring Boot, Kubernetes, Kafka, Docker, Redis, PostgreSQL, Prometheus, Grafana, 
 
 1. 유저가 소켓으로 채팅을 보내면 WAS가 Chat-send-topic에 채팅 내용을 produce 합니다.
 2. Message classfier는 Chat-send-topic에서 메시지를 consume 하고 해당 채팅방에 있는 유저들에 대해 반복문을 돌면서 Chat-receive-topic에 메시지를 다시 생산합니다.
-3. 이 때, Message classfier는 Routing table을 보고 수신자가 연결되어 있는 WAS_ID와 동일한 파티션 번호에 produce 합니다.(WAS와 파티션이 매핑되어있기 때문에)
+3. 이 때, Message classfier는 Routing table을 보고 수신자가 연결되어 있는 WAS_ID를 확인한 뒤 WAS-Partition connection에서 해당 WAS가 consume 중인 파티션 아이디를 가져와 해당 파티션에 채팅 내용을 produce 합니다.
 4. WAS는 자신과 매핑된 Chat-receive-topic 파티션의 메시지를 소비해서 소켓을 통해 수신자에서 채팅 메시지를 전달합니다.
 
 ### Scale out
