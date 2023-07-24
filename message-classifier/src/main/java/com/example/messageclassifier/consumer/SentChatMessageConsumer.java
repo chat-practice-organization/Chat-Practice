@@ -25,7 +25,7 @@ public class SentChatMessageConsumer {
     private final ClassifyMessageService classifyMessageService;
 
 
-    @KafkaListener(containerFactory = "kafkaBatchListenerContainerFactory", topicPartitions = @TopicPartition(topic = "${kafka.topic.chat.send}"))
+    @KafkaListener(topics = "${kafka.topic.chat.send}", containerFactory = "kafkaBatchListenerContainerFactory")
     public void consume(List<String> messages) {
         log.info("batch size:" + messages.size());
         messages.forEach(message -> {
