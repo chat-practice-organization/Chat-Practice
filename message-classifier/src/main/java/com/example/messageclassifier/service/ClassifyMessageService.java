@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import repository.jpa.ChatRoomMemberRepository;
+import repository.redis.chat.PartitionWasConnectionRepository;
 import repository.redis.chat.RoutingTableRepository;
 
 import java.util.List;
@@ -24,13 +25,23 @@ public class ClassifyMessageService {
     private final ChatRoomMemberRepository chatRoomMemberRepository;
     private final PreprocessedChatMessageProducer preprocessedChatMessageProducer;
     private final RoutingTableRepository routingTableRepository;
+    private final PartitionWasConnectionRepository partitionWasConnectionRepository;
 
     public void classify(ChatMessage chatMessage) {
         List<ChatRoomMember> chatRoomMembers = chatRoomMemberRepository.findTop500ChatRoomMemberJpaByChatRoomId(chatMessage.getChatRoomId());
         for (ChatRoomMember chatRoomMember : chatRoomMembers) {
             PreprocessedChatMessage preProcessedChatMessage = PreprocessedChatMessage.from(chatMessage, chatRoomMember.getSessionId());
             routingTableRepository.findById(chatRoomMember.getSessionId())
-                            .ifPresent(routingTable -> preprocessedChatMessageProducer.producePreprocessedChatMessage(CHAT_MESSAGES_RECEIVE_TOPIC, preProcessedChatMessage, routingTable.getWasId()));
+                            .ifPresent(routingTable -> {
+                                Integer targetWasId = routingTable.getWasId();
+                                partitionWasConnectionRepository.findById(targetWasId)
+                                        .ifPresent(partitionWasConnection -> {
+                                            for (Integer partition : partitionWasConnection.getPartitions()) {
+                                                preprocessedChatMessageProducer.producePreprocessedChatMessage(CHAT_MESSAGES_RECEIVE_TOPIC, preProcessedChatMessage, partition);
+                                                break;
+                                            }
+                                        });
+                            });
         }
     }
 
