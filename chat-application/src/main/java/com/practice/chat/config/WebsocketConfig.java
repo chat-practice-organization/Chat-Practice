@@ -1,5 +1,6 @@
 package com.practice.chat.config;
 
+import com.practice.chat.service.SaveChatRoomMemberService;
 import domain.ChatRoomMember;
 import repository.jpa.ChatRoomMemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 @Slf4j
 public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
-    private final ChatRoomMemberRepository chatRoomMemberRepository;
-
+    private final CustomChannelInterceptor customChannelInterceptor;
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
@@ -39,17 +39,6 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
-        registration.interceptors(new ChannelInterceptor() {
-            @Override
-            public Message<?> preSend(Message<?> message, MessageChannel channel) {
-                StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
-                if (StompCommand.SUBSCRIBE.equals(accessor.getCommand())) {
-                    accessor.setDestination("/sub/user/"+accessor.getSessionId());
-                    chatRoomMemberRepository.save(ChatRoomMember.builder().chatRoomId(1l).sessionId(accessor.getSessionId()).build());
-                    return MessageBuilder.createMessage(message.getPayload(), accessor.getMessageHeaders());
-                }
-                return message;
-            }
-        });
+        registration.interceptors(customChannelInterceptor);
     }
 }
