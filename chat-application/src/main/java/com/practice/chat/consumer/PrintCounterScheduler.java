@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class PrintCounterScheduler {
-    @Scheduled(cron = "0/5 * * * * ?")
-    public void printConsumerCount() {
-        log.info("consuming: "+ ReceivedChatMessageConsumer.count);
-    }
+//    @Scheduled(cron = "0/5 * * * * ?")
+//    public void printConsumerCount() {
+//        log.info("consuming: "+ ReceivedChatMessageConsumer.count);
+//    }
 }
