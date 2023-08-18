@@ -12,6 +12,7 @@ pipeline {
         GIT_CREDENTIALS_ID = sh(script: '${AWS_SECRETS} | jq -r ".GIT_CREDENTIALS_ID"', returnStdout: true).trim()
     }
 
+
     stages {
         // Docker Hub에 로그인 
         stage('Docker login') {
