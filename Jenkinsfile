@@ -24,21 +24,6 @@ pipeline {
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         // Docker 이미지를 빌드하고 Push
         stage('Build and Push Docker Images') {
             steps {
