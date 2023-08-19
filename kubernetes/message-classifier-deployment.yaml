@@ -23,7 +23,7 @@ spec:
                 - message-classifier
       containers:
         - name: message-classifier
-          image: lsjpjs1/message-classifier:12
+          image: lsjpjs1/message-classifier:13
           command: ["/bin/sh", "-c", "java -verbose:gc -Xms1200m -Xmx1200m -XX:+PrintGC -XX:+PrintCommandLineFlags -XX:NativeMemoryTracking=detail -jar ./message-classifier.jar"]
           resources:
             requests:
