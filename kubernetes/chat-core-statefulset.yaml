@@ -24,7 +24,7 @@ spec:
                 - chat-core
       containers:
         - name: chat-core
-          image: lsjpjs1/chat:17
+          image: lsjpjs1/chat:18
           command: ["/bin/sh", "-c", "WAS_ID=$(echo $HOSTNAME | grep -o '[0-9]*$'); java -verbose:gc -Xms1200m -Xmx1200m -XX:+PrintGC -XX:+PrintCommandLineFlags -XX:NativeMemoryTracking=detail -Dwas.id=${WAS_ID} -jar ./chat.jar"]
           resources:
             requests:
