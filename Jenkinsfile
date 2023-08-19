@@ -10,10 +10,6 @@ pipeline {
         DOCKERHUB_USERNAME = sh(script: '${AWS_SECRETS} | jq -r ".DOCKERHUB_USERNAME"', returnStdout: true).trim()
         DOCKERHUB_PASSWORD = sh(script: '${AWS_SECRETS} | jq -r ".DOCKERHUB_PASSWORD"', returnStdout: true).trim()
         GIT_CREDENTIALS_ID = sh(script: '${AWS_SECRETS} | jq -r ".GIT_CREDENTIALS_ID"', returnStdout: true).trim()
-    }
-
-
-
     stages {
         // Docker Hub에 로그인 
         stage('Docker login') {
