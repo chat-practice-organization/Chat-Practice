@@ -1,4 +1,5 @@
-import http from "k6/http"
+import ws from 'k6/ws';
+import { check } from 'k6';
 import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 
 export function handleSummary(data) {
@@ -12,5 +13,48 @@ export function handleSummary(data) {
 }
 
 export default function () {
-    http.get("")
+    const url = 'ws://localhost:8079/ws';  // 여기에 웹소켓 URL을 입력해주세요.
+
+        const params = { };
+    console.log('Start');
+    const res = ws.connect(url, params, function(socket) {
+        socket.on('open', function() {
+            console.log('WebSocket connection opened.');
+
+            // STOMP 연결 프레임
+            socket.send('CONNECT\n' +
+                'host:/\n' +
+                'login:\n' +
+                'passcode:\n' +
+                'accept-version:1.0,1.1,1.2\n' +
+                'heart-beat:6000,0\n\n\0');
+
+            socket.send('SUBSCRIBE\n' +
+                'id:sub-0\n' +
+                'destination:/sub/chat\n\n\0');
+
+            socket.send('SUBSCRIBE\n' +
+                'id:sub-0\n' +
+                'destination:/sub/chat\n\n\0');
+
+
+        });
+
+        socket.on('message',(data)=>console.log(data))
+
+        socket.on('close', function() {
+            console.log('WebSocket connection closed.');
+        });
+
+        socket.on('error', function(e) {
+            console.error('Error occurred:', e.error());
+        });
+
+        socket.setTimeout(function() {
+            console.log('Socket timed out.');
+            socket.close();
+        }, 30000);  // 30초 후에 타임아웃됩니다.
+    });
+
+    check(res, { 'WebSocket connection established': (r) => r && r.status === 101 });
 }
