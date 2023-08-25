@@ -12,8 +12,13 @@ export function handleSummary(data) {
 
 }
 
+export const options = {
+    iterations: 1,
+    vus: 1
+};
+
 export default function () {
-    const url = 'ws://localhost:8079/ws';  // 여기에 웹소켓 URL을 입력해주세요.
+    const url = 'ws://localhost:8080/ws';
 
         const params = { };
     console.log('Start');
@@ -33,9 +38,23 @@ export default function () {
                 'id:sub-0\n' +
                 'destination:/sub/chat\n\n\0');
 
-            socket.send('SUBSCRIBE\n' +
-                'id:sub-0\n' +
-                'destination:/sub/chat\n\n\0');
+            socket.setInterval(function timeout() {
+                socket.send('SEND\n' +
+                    'destination:/pub/chat/message\n' +
+                    '\n' +
+                    '{\n' +
+                    '    "chatRoomId":1,\n' +
+                    '    "content":"할로우"\n' +
+                    '}\n\n\0');
+            }, 500);
+
+            // socket.send('SEND\n' +
+            //     'destination:/pub/chat/message\n' +
+            //     '\n' +
+            //     '{\n' +
+            //     '    "chatRoomId":1,\n' +
+            //     '    "content":"할로우"\n' +
+            //     '}\n\n\0');
 
 
         });
@@ -53,7 +72,7 @@ export default function () {
         socket.setTimeout(function() {
             console.log('Socket timed out.');
             socket.close();
-        }, 30000);  // 30초 후에 타임아웃됩니다.
+        }, 20000);  // 30초 후에 타임아웃됩니다.
     });
 
     check(res, { 'WebSocket connection established': (r) => r && r.status === 101 });
