@@ -33,6 +33,9 @@ subprojects {
     }
 
     dependencies {
+        
+        implementation 'co.elastic.apm:apm-agent-attach:1.28.2'
+        implementation 'co.elastic.apm:apm-agent-api:1.28.2'
         implementation 'org.springframework.boot:spring-boot-starter-amqp'
         implementation 'org.springframework.boot:spring-boot-starter-websocket'
         implementation 'org.apache.kafka:kafka-clients'
