@@ -30,18 +30,22 @@ public class ClassifyMessageService {
     public void classify(ChatMessage chatMessage) {
         List<ChatRoomMember> chatRoomMembers = chatRoomMemberRepository.findTop500ChatRoomMemberJpaByChatRoomId(chatMessage.getChatRoomId());
         for (ChatRoomMember chatRoomMember : chatRoomMembers) {
-            PreprocessedChatMessage preProcessedChatMessage = PreprocessedChatMessage.from(chatMessage, chatRoomMember.getSessionId());
-            routingTableRepository.findById(chatRoomMember.getSessionId())
-                            .ifPresent(routingTable -> {
-                                Integer targetWasId = routingTable.getWasId();
-                                partitionWasConnectionRepository.findById(targetWasId)
-                                        .ifPresent(partitionWasConnection -> {
-                                            for (Integer partition : partitionWasConnection.getPartitions()) {
-                                                preprocessedChatMessageProducer.producePreprocessedChatMessage(CHAT_MESSAGES_RECEIVE_TOPIC, preProcessedChatMessage, partition);
-                                                break;
-                                            }
-                                        });
-                            });
+            Runnable runnable = () -> {
+                PreprocessedChatMessage preProcessedChatMessage = PreprocessedChatMessage.from(chatMessage, chatRoomMember.getSessionId());
+                routingTableRepository.findById(chatRoomMember.getSessionId())
+                        .ifPresent(routingTable -> {
+                            Integer targetWasId = routingTable.getWasId();
+                            partitionWasConnectionRepository.findById(targetWasId)
+                                    .ifPresent(partitionWasConnection -> {
+                                        for (Integer partition : partitionWasConnection.getPartitions()) {
+                                            preprocessedChatMessageProducer.producePreprocessedChatMessage(CHAT_MESSAGES_RECEIVE_TOPIC, preProcessedChatMessage, partition);
+                                            break;
+                                        }
+                                    });
+                        });
+            };
+            Thread thread = new Thread(runnable);
+            thread.start();
         }
     }
 
