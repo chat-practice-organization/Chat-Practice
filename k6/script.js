@@ -13,8 +13,8 @@ export function handleSummary(data) {
 }
 
 export const options = {
-    iterations: 1,
-    vus: 1
+    iterations: 800,
+    vus: 800
 };
 
 export default function () {
@@ -46,7 +46,7 @@ export default function () {
                     '    "chatRoomId":1,\n' +
                     '    "content":"할로우"\n' +
                     '}\n\n\0');
-            }, 500);
+            }, 4);
 
             // socket.send('SEND\n' +
             //     'destination:/pub/chat/message\n' +
@@ -59,7 +59,9 @@ export default function () {
 
         });
 
-        socket.on('message',(data)=>console.log(data))
+        // socket.on('message',
+        //     (data)=>console.log(data)
+        // )
 
         socket.on('close', function() {
             console.log('WebSocket connection closed.');
@@ -72,7 +74,7 @@ export default function () {
         socket.setTimeout(function() {
             console.log('Socket timed out.');
             socket.close();
-        }, 20000);  // 30초 후에 타임아웃됩니다.
+        }, 2000);  // 30초 후에 타임아웃됩니다.
     });
 
     check(res, { 'WebSocket connection established': (r) => r && r.status === 101 });
