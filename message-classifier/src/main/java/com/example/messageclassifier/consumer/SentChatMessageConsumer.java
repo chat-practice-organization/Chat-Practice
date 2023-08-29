@@ -26,15 +26,27 @@ public class SentChatMessageConsumer {
 
 
     @KafkaListener(topics = "${kafka.topic.chat.send}", containerFactory = "kafkaBatchListenerContainerFactory")
-    public void consume(String message) {
-        ChatMessage chatMessage = null;
-        try {
-            chatMessage = objectMapper.readValue(message, ChatMessage.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+    public void consume(List<String> messages) {
 
-        if (chatMessage != null) classifyMessageService.classify(chatMessage);
+        long startTime = System.nanoTime();
+        log.info("batch size:" + messages.size());
+        messages.forEach(message -> {
+            ChatMessage chatMessage = null;
+            try {
+                chatMessage = objectMapper.readValue(message, ChatMessage.class);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
 
+            if (chatMessage != null) classifyMessageService.classify(chatMessage);
+
+        });
+
+        long endTime = System.nanoTime();
+        double duration = (double) (endTime - startTime) / 1_000_000;  // nano -> milli
+        log.info("Batch finished: {}",messages.size());
+        log.info("Batch process execution time: {}",duration);
+        log.info("Average execution time per a message: {}",duration/messages.size());
+        log.info("Message processed per a second: {}",1000/(duration/messages.size()));
     }
 }
