@@ -34,7 +34,7 @@ public class KafkaConfig {
     @Bean("kafkaBatchListenerContainerFactory")
     public ConcurrentKafkaListenerContainerFactory<String, String> batchFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> concurrentKafkaListenerContainerFactory = new ConcurrentKafkaListenerContainerFactory<>();
-//        concurrentKafkaListenerContainerFactory.setBatchListener(true);
+        concurrentKafkaListenerContainerFactory.setBatchListener(true);
         concurrentKafkaListenerContainerFactory.setConsumerFactory(consumerFactory());
         concurrentKafkaListenerContainerFactory.getContainerProperties().setConsumerRebalanceListener(customConsumerRebalanceListener);
         return concurrentKafkaListenerContainerFactory;
@@ -50,9 +50,9 @@ public class KafkaConfig {
         configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         configProps.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG, List.of(StickyAssignor.class));
-//        configProps.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "5000");
-//        configProps.put(ConsumerConfig.FETCH_MIN_BYTES_CONFIG, "1000000");
-//        configProps.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, "3000");
+        configProps.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "10000");
+        configProps.put(ConsumerConfig.FETCH_MIN_BYTES_CONFIG, "1000000");
+        configProps.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, "1000");
         return new DefaultKafkaConsumerFactory<>(configProps);
     }
 }

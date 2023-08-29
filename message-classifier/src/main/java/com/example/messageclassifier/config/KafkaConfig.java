@@ -32,7 +32,7 @@ public class KafkaConfig {
     @Bean("kafkaBatchListenerContainerFactory")
     public ConcurrentKafkaListenerContainerFactory<String, String> batchFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> concurrentKafkaListenerContainerFactory = new ConcurrentKafkaListenerContainerFactory<>();
-//        concurrentKafkaListenerContainerFactory.setBatchListener(true);
+        concurrentKafkaListenerContainerFactory.setBatchListener(true);
         concurrentKafkaListenerContainerFactory.setConsumerFactory(consumerFactory());
         return concurrentKafkaListenerContainerFactory;
     }
@@ -47,9 +47,13 @@ public class KafkaConfig {
         configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         configProps.put(ConsumerConfig.PARTITION_ASSIGNMENT_STRATEGY_CONFIG, List.of(StickyAssignor.class));
-//        configProps.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "5000");
-//        configProps.put(ConsumerConfig.FETCH_MIN_BYTES_CONFIG, "1000000");
-//        configProps.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, "3000");
+        //최대로 몇개 메시지 가져올지
+        configProps.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "10000");
+        //send topic에 쌓이는 속도가 더 느림 send topic에 쌓이는 걸 가져오는데
+        //최소 몇 바이트가 쌓여야 배치로 가져올지
+        configProps.put(ConsumerConfig.FETCH_MIN_BYTES_CONFIG, "1000000");
+        //최대 몇 ms까지 대기할지
+        configProps.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, "1000");
 
         return new DefaultKafkaConsumerFactory<>(configProps);
     }
