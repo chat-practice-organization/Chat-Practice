@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @RestController
 @Slf4j
@@ -24,13 +26,14 @@ public class InsertQueueController {
 
     private final ChatMessageRepository chatMessageRepository;
     private final ChatMessageProducer chatMessageProducer;
+    private final ExecutorService executorService = Executors.newFixedThreadPool(500);
 
 
     // 채팅 메시지 받아서 메시지 큐와 db에 저장
     @MessageMapping("/chat/message")
     public void insertChatMessage(ChatMessage chatMessage) {
         chatMessage.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-        chatMessageRepository.save(chatMessage);
+        executorService.submit(()->chatMessageRepository.save(chatMessage));
         chatMessageProducer.produceChatMessage(CHAT_MESSAGES_SEND_TOPIC, chatMessage);
     }
 
