@@ -1,4 +1,4 @@
-package com.practice.chat.config;
+package config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;

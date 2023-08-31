@@ -13,7 +13,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.springframework.cache.annotation.EnableCaching;
+
+
 @SpringBootApplication
+@EnableCaching
 public class MessageClassifierApplication {
     private static final Logger logger = LoggerFactory.getLogger(MessageClassifierApplication.class);
 
@@ -35,6 +39,6 @@ public class MessageClassifierApplication {
 
                 logger.info("Used memory: {} MB, Max memory: {} MB", usedMemory, maxMemory);
             }
-        }, 0, 500);
+        }, 0, 3000);
     }
 }
