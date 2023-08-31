@@ -4,6 +4,10 @@ import domain.ChatMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -23,4 +27,17 @@ public class ChatMessageProducer {
         }
     }
 
+
+    public void produceCacheSyncMessage(String topic, String roomId, String action) {
+        Map<String, String> message = new HashMap<>();
+        message.put("roomId", roomId);
+        message.put("action", action);
+        
+        try {
+            kafkaTemplate.send(topic, objectMapper.writeValueAsString(message));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }

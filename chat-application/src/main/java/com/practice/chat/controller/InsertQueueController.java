@@ -12,9 +12,15 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 import java.sql.Timestamp;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -27,6 +33,7 @@ public class InsertQueueController {
     private final ChatMessageRepository chatMessageRepository;
     private final ChatMessageProducer chatMessageProducer;
     private final ExecutorService executorService = Executors.newFixedThreadPool(500);
+    private static final Logger logger = LoggerFactory.getLogger(InsertQueueController.class);
 
 
     // 채팅 메시지 받아서 메시지 큐와 db에 저장
@@ -37,6 +44,13 @@ public class InsertQueueController {
         chatMessageProducer.produceChatMessage(CHAT_MESSAGES_SEND_TOPIC, chatMessage);
     }
 
+    @MessageMapping("/chat/cache")
+    public void handleChat(Map<String, String> chatCacheAction) {
+
+        String roomId = chatCacheAction.get("roomId");
+        String action = chatCacheAction.get("action");
+        chatMessageProducer.produceCacheSyncMessage("sync-cache-topic", roomId, action);
+    }
 
 
     @GetMapping(value = "/")

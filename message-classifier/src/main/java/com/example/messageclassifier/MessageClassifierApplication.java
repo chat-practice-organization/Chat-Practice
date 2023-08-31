@@ -22,7 +22,7 @@ public class MessageClassifierApplication {
     private static final Logger logger = LoggerFactory.getLogger(MessageClassifierApplication.class);
 
     public static void main(String[] args) {
-        ElasticApmAttacher.attach();
+        // ElasticApmAttacher.attach();
         SpringApplication.run(MessageClassifierApplication.class, args);
         startMemoryLogging();
 
