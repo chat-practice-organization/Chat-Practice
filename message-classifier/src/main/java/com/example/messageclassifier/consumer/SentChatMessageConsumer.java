@@ -2,6 +2,7 @@ package com.example.messageclassifier.consumer;
 
 import com.example.messageclassifier.producer.PreprocessedChatMessageProducer;
 import com.example.messageclassifier.service.ClassifyMessageService;
+import com.example.messageclassifier.service.CacheService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.ChatMessage;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 import repository.jpa.ChatRoomMemberRepository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
@@ -23,6 +25,7 @@ public class SentChatMessageConsumer {
 
     private final ObjectMapper objectMapper;
     private final ClassifyMessageService classifyMessageService;
+    private final CacheService cacheService;
 
 
     @KafkaListener(topics = "${kafka.topic.chat.send}", containerFactory = "kafkaBatchListenerContainerFactory")
@@ -48,5 +51,18 @@ public class SentChatMessageConsumer {
         log.info("Batch process execution time: {}",duration);
         log.info("Average execution time per a message: {}",duration/messages.size());
         log.info("Message processed per a second: {}",1000/(duration/messages.size()));
+    }
+
+
+    @KafkaListener(topics = "sync-cache-topic", containerFactory = "kafkaBatchListenerContainerFactory")
+    public void cacheSyncConsume(String message) {
+        try {
+            Map<String, String> receivedMessage = new ObjectMapper().readValue(message, Map.class);
+            log.info("Cache Sync Message Received");
+            cacheService.evictAllPartitionWasConnectionCache();
+            cacheService.evictAllRoutingTableCache();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cache.Cache;
 import org.springframework.cache.Cache.ValueWrapper;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
+import org.springframework.cache.annotation.EnableCaching;
 
 @Configuration
 @ComponentScan({"config"})
@@ -33,7 +34,7 @@ public class CacheConfig {
                         if (valueWrapper == null) {
                             logger.info("Cache MISS for key: {}", key);
                         } else {
-                            logger.info("Cache HIT for key: {}", key);
+//                            logger.info("Cache HIT for key: {}", key);
                         }
                         return valueWrapper;
                     }

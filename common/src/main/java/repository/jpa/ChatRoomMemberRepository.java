@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ChatRoomMemberRepository extends JpaRepository<ChatRoomMember,Long> {
-    // @Cacheable(value = "chatRoomMemberByChatRoomId", key = "#chatRoomId.toString()",cacheManager = "redisCacheManager")
+    @Cacheable(value = "chatRoomMemberByChatRoomId", key = "#chatRoomId.toString()",cacheManager = "cacheManager")
     List<ChatRoomMember> findTop500ChatRoomMemberJpaByChatRoomId(Long chatRoomId);
 }

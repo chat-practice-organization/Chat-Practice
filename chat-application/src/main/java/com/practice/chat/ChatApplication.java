@@ -16,7 +16,7 @@ public class ChatApplication {
     private static final Logger logger = LoggerFactory.getLogger(ChatApplication.class);
 
     public static void main(String[] args) {
-        ElasticApmAttacher.attach();
+        // ElasticApmAttacher.attach();
         SpringApplication.run(ChatApplication.class, args);
         startMemoryLogging();
     }
