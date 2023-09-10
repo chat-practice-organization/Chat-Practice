@@ -24,7 +24,7 @@ spec:
       containers:
         - name: message-classifier
           image: lsjpjs1/message-classifier
-          command: ["/bin/sh", "-c", "java -verbose:gc -Xms1200m -Xmx1200m -XX:+PrintGC -XX:+PrintCommandLineFlags -XX:NativeMemoryTracking=detail -jar ./message-classifier.jar"]
+          command: ["/bin/sh", "-c", "WAS_ID=$(echo $HOSTNAME);  echo WAS_ID is ${WAS_ID}; java -verbose:gc -Xms1200m -Xmx1200m -XX:+PrintGC -XX:+PrintCommandLineFlags -XX:NativeMemoryTracking=detail -Dwas.id=${WAS_ID} -jar ./message-classifier.jar"]
           resources:
             requests:
               memory: "1000Mi"

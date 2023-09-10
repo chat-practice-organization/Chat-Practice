@@ -27,6 +27,7 @@ public class ReceivedChatMessageConsumer {
     @KafkaListener(topics = "${kafka.topic.chat.receive}",containerFactory = "kafkaBatchListenerContainerFactory")
     public void consume(List<String> messages) {
 
+        log.info("batch size in WAS:" + messages.size());
         messages.forEach(message -> {
             PreprocessedChatMessage preprocessedChatMessage = null;
             try {

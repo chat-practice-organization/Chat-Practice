@@ -41,7 +41,8 @@ public class InsertQueueController {
     public void insertChatMessage(ChatMessage chatMessage) {
         chatMessage.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         executorService.submit(()->chatMessageRepository.save(chatMessage));
-        chatMessageProducer.produceChatMessage(CHAT_MESSAGES_SEND_TOPIC, chatMessage);
+        executorService.submit(()->chatMessageProducer.produceChatMessage(CHAT_MESSAGES_SEND_TOPIC, chatMessage));
+
     }
 
     @MessageMapping("/chat/cache")

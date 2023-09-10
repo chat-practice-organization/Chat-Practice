@@ -31,8 +31,8 @@ public class SentChatMessageConsumer {
     @KafkaListener(topics = "${kafka.topic.chat.send}", containerFactory = "kafkaBatchListenerContainerFactory")
     public void consume(List<String> messages) {
 
-        long startTime = System.nanoTime();
-        log.info("batch size:" + messages.size());
+//        long startTime = System.nanoTime();
+        log.info("batch size in message classifier:" + messages.size());
         messages.forEach(message -> {
             ChatMessage chatMessage = null;
             try {
@@ -45,22 +45,23 @@ public class SentChatMessageConsumer {
 
         });
 
-        long endTime = System.nanoTime();
-        double duration = (double) (endTime - startTime) / 1_000_000;  // nano -> milli
-        log.info("Batch finished: {}",messages.size());
-        log.info("Batch process execution time: {}",duration);
-        log.info("Average execution time per a message: {}",duration/messages.size());
-        log.info("Message processed per a second: {}",1000/(duration/messages.size()));
+//        long endTime = System.nanoTime();
+//        double duration = (double) (endTime - startTime) / 1_000_000;  // nano -> milli
+//        log.info("Batch finished: {}",messages.size());
+//        log.info("Batch process execution time: {}",duration);
+//        log.info("Average execution time per a message: {}",duration/messages.size());
+//        log.info("Message processed per a second: {}",1000/(duration/messages.size()));
     }
 
 
-    @KafkaListener(topics = "sync-cache-topic", containerFactory = "kafkaBatchListenerContainerFactory")
+    @KafkaListener(topics = "sync-cache-topic", containerFactory = "uniqueContainerFactory")
     public void cacheSyncConsume(String message) {
         try {
             Map<String, String> receivedMessage = new ObjectMapper().readValue(message, Map.class);
             log.info("Cache Sync Message Received");
             cacheService.evictAllPartitionWasConnectionCache();
             cacheService.evictAllRoutingTableCache();
+            cacheService.evictAllChatRoomMemberByChatRoomIdCache();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
