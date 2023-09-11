@@ -32,9 +32,9 @@ public class CacheConfig {
                     public ValueWrapper get(Object key) {
                         ValueWrapper valueWrapper = super.get(key);
                         if (valueWrapper == null) {
-                            logger.info("Cache MISS for key: {}", key);
+//                            logger.info("Cache MISS for key: {} in {}", key,getName());
                         } else {
-//                            logger.info("Cache HIT for key: {}", key);
+//                            logger.info("Cache HIT for key: {} in {}", key,getName());
                         }
                         return valueWrapper;
                     }

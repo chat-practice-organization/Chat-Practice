@@ -21,4 +21,9 @@ public class CacheService {
     public void evictAllRoutingTableCache() {
         log.info("routingTable Cache Clear");
     }
+
+    @CacheEvict(value = "chatRoomMemberByChatRoomId", allEntries = true)
+    public void evictAllChatRoomMemberByChatRoomIdCache() {
+        log.info("chatRoomMemberByChatRoomId Cache Clear");
+    }
 }
