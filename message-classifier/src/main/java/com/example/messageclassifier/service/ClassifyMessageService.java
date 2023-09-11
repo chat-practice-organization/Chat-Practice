@@ -52,7 +52,6 @@ public class ClassifyMessageService {
                             partitionWasConnectionRepository.findById(targetWasId)
                                     .ifPresent(partitionWasConnection -> {
                                         for (Integer partition : partitionWasConnection.getPartitions()) {
-                                            log.info("wasid:"+partitionWasConnection.getWasId()+", partition:"+partition);
                                             preprocessedChatMessageProducer.producePreprocessedChatMessage(CHAT_MESSAGES_RECEIVE_TOPIC, preProcessedChatMessage, partition);
                                             break;
                                         }
